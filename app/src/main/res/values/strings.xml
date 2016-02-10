@@ -1,0 +1,21 @@
+<resources>
+
+    <string name="app_name">RT_Survey</string>
+    <string name="open">Abrir</string>
+    <string name="close">Cerrar</string>
+
+    <string-array name="TAB">
+        <item>COMPAÑIA</item>
+        <item>CONTACTO</item>
+        <item>SITIO</item>
+        <item>EDIFICIO</item>
+    </string-array>
+
+    <string-array name="TAB_ITEM">
+        <item>INFORMACION</item>
+        <item>INSPECCION</item>
+        <item>INSTALACION</item>
+    </string-array>
+
+
+</resources>
