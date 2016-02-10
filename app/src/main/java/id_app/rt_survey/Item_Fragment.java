@@ -1,5 +1,6 @@
 package id_app.rt_survey;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,14 +34,27 @@ public class Item_Fragment extends Fragment{
         viewPager.setAdapter(new MyFragmentAdapter(getActivity().getSupportFragmentManager()));
 
         material_tab = (SlidingTabLayout) view.findViewById(R.id.material_tab1);
-        material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
-        material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         material_tab.setViewPager(viewPager);
 
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
+        //DEPRECATED BUG
+        if(Build.VERSION.SDK_INT<23){
+            material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
+            material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        }else{
+            material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent,null));
+            material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
+        }
+
+
+
+    }
 
     private class MyFragmentAdapter extends FragmentPagerAdapter {
 
@@ -58,23 +72,29 @@ public class Item_Fragment extends Fragment{
             {
                 Tab_Info f=new Tab_Info();
                 return f;
-            }else if(position==1)
+            }
+            else if(position==1)
             {
                 Tab_Info f=new Tab_Info();
                 return f;
-            }else if(position==2)
+            }
+            else if(position==2)
+            {
+                Tab_Info f=new Tab_Info();
+                return f;
+            }
+            else if(position==3)
             {
                 Tab_Info f=new Tab_Info();
                 return f;
             }else{
                 return null;
             }
-
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
