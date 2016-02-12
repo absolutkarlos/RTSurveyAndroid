@@ -29,10 +29,8 @@ public class Item_Fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view=inflater.inflate(R.layout.item_fragment,container,false);
-
         viewPager = (ViewPager) view.findViewById(R.id.view_pager1);
         viewPager.setAdapter(new MyFragmentAdapter(getActivity().getSupportFragmentManager()));
-
         material_tab = (SlidingTabLayout) view.findViewById(R.id.material_tab1);
         material_tab.setViewPager(viewPager);
 
@@ -51,8 +49,7 @@ public class Item_Fragment extends Fragment{
             material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent,null));
             material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
         }
-
-
+        material_tab.setDistributeEvenly(true);
 
     }
 

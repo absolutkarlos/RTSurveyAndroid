@@ -27,7 +27,7 @@ import javax.net.ssl.X509TrustManager;
 
 public class ServerJSOBJECT extends AsyncTask<Void,Void,JSONObject>{
 
-    private static final String ENDPOINT = "http://idapps.co.ve/api/v0.0.1/";
+    private static final String ENDPOINT = "DIRECCION DEL SERVIDOR";
     private JSONObject input=null;
     private String taskAddress;
     private TaskListener taskListener;

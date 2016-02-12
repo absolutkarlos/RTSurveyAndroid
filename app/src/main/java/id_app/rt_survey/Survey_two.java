@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import id_app.rt_survey.MaterialTab.SlidingTabLayout;
+import id_app.rt_survey.Tabs_Survey.Tab_Site;
 import id_app.rt_survey.Tabs_Survey.Tab_company;
 
 /**
@@ -28,10 +29,8 @@ public class Survey_two extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view=inflater.inflate(R.layout.survey_two,container,false);
-
         viewPager = (ViewPager) view.findViewById(R.id.view_pager);
         viewPager.setAdapter(new MyFragmentAdapter(getActivity().getSupportFragmentManager()));
-
         material_tab = (SlidingTabLayout) view.findViewById(R.id.material_tab);
         material_tab.setViewPager(viewPager);
 
@@ -42,7 +41,6 @@ public class Survey_two extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        //DEPRECATED BUG
         if(Build.VERSION.SDK_INT<23){
             material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
             material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
@@ -50,8 +48,7 @@ public class Survey_two extends Fragment {
             material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent,null));
             material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
         }
-
-
+        material_tab.setDistributeEvenly(true);
 
     }
 
@@ -77,7 +74,7 @@ public class Survey_two extends Fragment {
                 return f;
             }else if(position==2)
             {
-                Tab_company f=new Tab_company();
+                Tab_Site f=new Tab_Site();
                 return f;
             }else if(position==3)
             {
