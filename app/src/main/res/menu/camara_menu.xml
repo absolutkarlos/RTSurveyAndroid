@@ -5,7 +5,7 @@
     <item
         android:id="@+id/Camara"
         android:orderInCategory="100"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_camera_alt_white_24px"
         app:showAsAction="always"
         android:title="Go"/>
 

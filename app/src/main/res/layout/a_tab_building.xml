@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Background"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp">
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_gravity="center_horizontal" />
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText3" />
+
+    <TextView
+        style="@style/textview_custom"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText4"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/table_lable"
+        android:layout_marginTop="20dp" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                style="@style/edittext_custom"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/ic_schedule_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText5"
+                android:layout_weight="1"
+                android:layout_gravity="right" />
+
+            <EditText
+                style="@style/edittext_custom"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/ic_schedule_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText6"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <EditText
+                style="@style/edittext_custom"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/ic_schedule_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_weight="1" />
+
+            <EditText
+                style="@style/edittext_custom"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:drawableLeft="@drawable/ic_schedule_black_24dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText8"
+                android:layout_weight="1" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp" />
+
+
+</LinearLayout>

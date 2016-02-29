@@ -3,38 +3,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/Background">
 
     <TextView
-        android:layout_width="wrap_content"
+        style="@style/textview_custom"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
+        android:text="Coordenadas"
+        android:id="@+id/header"
         android:layout_gravity="center_horizontal|left"
         android:theme="@style/AppTheme"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        style="@style/textview_custom"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView2"
+        android:text="latitud"
+        android:id="@+id/latitud"
         android:layout_gravity="center_horizontal|left"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        style="@style/textview_custom"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView3"
+        android:text="longitud"
+        android:id="@+id/longitud"
         android:layout_gravity="center_horizontal|left"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp" />
 
     <FrameLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,11 +52,7 @@
             tools:context=".MapsActivity"
             android:name="com.google.android.gms.maps.SupportMapFragment" />
 
-
-
     </FrameLayout>
-
-
 
 
 </LinearLayout>

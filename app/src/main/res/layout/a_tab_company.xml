@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/Background"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    android:gravity="center">
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customer_id"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/customer_id"/>
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/trademark"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/trademark"/>
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/business_name"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/business_name"/>
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/country"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/country"/>
+
+    <EditText
+        style="@style/edittext_custom"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailed_address"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/detailed_address"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/save"
+        android:layout_marginBottom="20dp"
+        android:text="@string/save"
+        android:layout_marginTop="50dp"/>
+
+</LinearLayout>

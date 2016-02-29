@@ -1,5 +1,6 @@
 <resources>
 
+    <string name="google_app_id">992401608701</string>
     <string name="app_name">RT_Survey</string>
     <string name="open">Abrir</string>
     <string name="close">Cerrar</string>
@@ -17,5 +18,31 @@
         <item>INSTALACION</item>
         <item>FOTOS</item>
     </string-array>
+
+
+    <!-- GENERALES -->
+    <string name="save">ENVIAR</string>
+
+    <!-- COMPAÑIA -->
+    <string name="customer_id">Identificador Fiscal</string>
+    <string name="trademark">Nombre Completo</string>
+    <string name="business_name">Nombre Comercial</string>
+    <string name="country">Pais</string>
+    <string name="detailed_address">Direccion Detallada</string>
+
+    <!-- CONTACTO -->
+    <string name="full_name">Nombre Completo</string>
+    <string name="phone">Telefono</string>
+    <string name="mail">Correo Electronico</string>
+    <string name="position">Posicion</string>
+    <string name="sector">Sector</string>
+    <string name="contact_type">Tipo de Contacto</string>
+
+    <!-- EDIFICIO -->
+    <string name="table_lable">Acceso al Edificio</string>
+
+    <!-- LOGIN -->
+    <string name="login_mail">Correo Electronico</string>
+    <string name="login_password">Contraseña</string>
 
 </resources>

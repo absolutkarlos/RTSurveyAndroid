@@ -5,22 +5,26 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import id_app.rt_survey.MaterialTab.SlidingTabLayout;
+import id_app.rt_survey.Tabs_Survey.Tab_Building;
+import id_app.rt_survey.Tabs_Survey.Tab_Contact;
 import id_app.rt_survey.Tabs_Survey.Tab_Site;
 import id_app.rt_survey.Tabs_Survey.Tab_company;
+import id_app.rt_survey.Utilities.CustomViewPager;
 
 /**
  * Created by Carlos_Lopez on 2/8/16.
  */
 public class Survey_two extends Fragment {
 
-    private ViewPager viewPager;
+    private CustomViewPager viewPager;
     private SlidingTabLayout material_tab;
     private View view;
 
@@ -29,12 +33,20 @@ public class Survey_two extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view=inflater.inflate(R.layout.survey_two,container,false);
-        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        viewPager = (CustomViewPager) view.findViewById(R.id.view_pager);
+
+        viewPager.setPagingEnabled(false);
         viewPager.setAdapter(new MyFragmentAdapter(getActivity().getSupportFragmentManager()));
+
         material_tab = (SlidingTabLayout) view.findViewById(R.id.material_tab);
         material_tab.setViewPager(viewPager);
+        material_tab.setDistributeEvenly(true);
 
+        material_tab.setOnClickListener(new CustomTabClickListener());
+
+        setHasOptionsMenu(true);
         return view;
+
     }
 
     @Override
@@ -48,11 +60,27 @@ public class Survey_two extends Fragment {
             material_tab.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent,null));
             material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
         }
-        material_tab.setDistributeEvenly(true);
+
+
+
 
     }
 
-    private class MyFragmentAdapter extends FragmentPagerAdapter {
+    private class CustomTabClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+
+        }
+    }
+
+
+
+
+
+
+
+    private class MyFragmentAdapter extends FragmentStatePagerAdapter {
 
         String[] tabs;
 
@@ -70,7 +98,7 @@ public class Survey_two extends Fragment {
                 return f;
             }else if(position==1)
             {
-                Tab_company f=new Tab_company();
+                Tab_Contact f=new Tab_Contact();
                 return f;
             }else if(position==2)
             {
@@ -78,7 +106,7 @@ public class Survey_two extends Fragment {
                 return f;
             }else if(position==3)
             {
-                Tab_company f=new Tab_company();
+                Tab_Building f=new Tab_Building();
                 return f;
             }else{
                 return null;
@@ -98,5 +126,13 @@ public class Survey_two extends Fragment {
     }
 
 
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
+    }
 
 }

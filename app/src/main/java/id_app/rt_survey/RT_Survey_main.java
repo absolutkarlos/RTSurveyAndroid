@@ -1,15 +1,16 @@
 package id_app.rt_survey;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -20,9 +21,38 @@ public class RT_Survey_main extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
+    private Boolean SESSION_ACTIVE;
+    private String MAIL;
+    private String PASSWORD;
+    private String TOKEN;
+    private static final String DEFAULT="N/A";
+
+    private SharedPreferences SP;
+    private SharedPreferences.Editor ED;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        SP=getSharedPreferences("USER", Context.MODE_PRIVATE);
+        SESSION_ACTIVE=SP.getBoolean("SESSION_ACTIVE",false);
+
+
+        if(!SESSION_ACTIVE){
+
+            Intent intent = new Intent(this,login_activity.class);
+            startActivity(intent);
+            finish();
+
+        }else{
+
+            MAIL=SP.getString("MAIL",DEFAULT);
+            PASSWORD=SP.getString("PASSWORD",DEFAULT);
+            TOKEN=SP.getString("TOKEN",DEFAULT);;
+
+        }
+
         setContentView(R.layout.rt_survey);
 
         app_bar=(Toolbar)findViewById(R.id.app_bar);
@@ -57,7 +87,7 @@ public class RT_Survey_main extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Survey_one one = new Survey_one();
-        transaction.add(R.id.sub_frame,one,"F1");
+        transaction.add(R.id.sub_frame,one,"main fragment");
         transaction.commit();
 
     }
@@ -82,18 +112,23 @@ public class RT_Survey_main extends AppCompatActivity {
                     case R.id.texto_4:
                         Toast.makeText(RT_Survey_main.this,"CUATRO",Toast.LENGTH_SHORT).show();
                         break;
+                    case R.id.close_user:
+
+                        ED=SP.edit();
+                        ED.clear();
+                        ED.commit();
+                        finish();
+
+                        break;
+                    case R.id.Update_Basic:
+
+                        break;
+
                 }
                 return true;
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_menu, menu);
-        return true;
     }
 
     @Override
@@ -117,7 +152,7 @@ public class RT_Survey_main extends AppCompatActivity {
                 break;
         }
 
-        return true;
+        return false;
     }
 
 }

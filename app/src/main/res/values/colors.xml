@@ -6,9 +6,17 @@
     <color name="colorAccent">@color/Goldenrod</color>
 
     <color name="DarkSlateGray">#333333</color>
-    <color name="WhiteSmoke">#f2f2f2</color>
+    <color name="WhiteSmoke">#969595</color>
     <color name="Goldenrod">#dbb704</color>
 
+
+
+    <!-- PALETA DE COLORES FONDO BLANCO !-->
+    <color name="White">#FFFF</color>
+    <color name="WhiteHint">#2c030303</color>
+    <color name="Background">#e7e8e8</color>
+
+    <!-- PALETA DE COLORES DEL MENU LATERAL !-->
     <color name="Black">#000000</color>
     <color name="Firebrick">#b22222</color>
     <color name="Gold">#ffcc00</color>
