@@ -80,7 +80,7 @@ public class RT_Survey_main extends AppCompatActivity {
             }
         };
 
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
         //INICIALIZANDO EL PRIMER FRAGMENTO DE PRUEBA
