@@ -17,4 +17,12 @@
         app:showAsAction="always"
         android:title="Update"/>
 
+    <item
+        android:id="@+id/Search"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"
+        android:title="Search"/>
+
+
 </menu>

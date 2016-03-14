@@ -47,7 +47,10 @@ public class RT_Survey_main extends AppCompatActivity {
 
         }else{
 
-            MAIL=SP.getString("MAIL",DEFAULT);
+            //LINEA DE TESTEO
+            Toast.makeText(this,SP.getString("USERID",DEFAULT)+" "+SP.getString("TOKEN_TYPE",DEFAULT),Toast.LENGTH_SHORT).show();
+
+            MAIL=SP.getString("USERNAME",DEFAULT);
             PASSWORD=SP.getString("PASSWORD",DEFAULT);
             TOKEN=SP.getString("TOKEN",DEFAULT);;
 
@@ -143,13 +146,21 @@ public class RT_Survey_main extends AppCompatActivity {
                 transaction.replace(R.id.sub_frame,one,"F2");
                 transaction.addToBackStack(null);
                 transaction.commit();
-
                 break;
             case R.id.Update:
                 //LOGICA PARA ACTUALIZAR DATOS
                 break;
+            case R.id.Search:
+                //LOGICA PARA ACTUALIZAR DATOS
+                FragmentManager fm = getSupportFragmentManager();
+                Dialog_Fragment DF = new Dialog_Fragment();
+                DF.show(fm, "DF");
+
+
+                break;
             default:
                 break;
+
         }
 
         return false;

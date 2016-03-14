@@ -19,7 +19,6 @@
         <item>FOTOS</item>
     </string-array>
 
-
     <!-- GENERALES -->
     <string name="save">ENVIAR</string>
 
@@ -44,5 +43,10 @@
     <!-- LOGIN -->
     <string name="login_mail">Correo Electronico</string>
     <string name="login_password">Contraseña</string>
+
+    <!-- DIALOG FRAGMENT -->
+    <string name="label_dialog">Cliente Existente?</string>
+    <string name="search_hint">Ingrese el RIF/RUC</string>
+    <string name="search_button">BUSCAR</string>
 
 </resources>

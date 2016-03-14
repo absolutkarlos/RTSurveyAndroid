@@ -37,7 +37,6 @@ public class JOR extends JsonObjectRequest {
         this.mJSONR=jsonRequest;
     }
 
-
     @Override
     public byte[] getBody() {
 

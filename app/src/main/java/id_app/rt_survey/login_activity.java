@@ -85,24 +85,29 @@ public class login_activity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-                Toast.makeText(login_activity.this,response.toString(),Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(login_activity.this,RT_Survey_main.class);
-
+                Toast.makeText(login_activity.this,response.toString(),Toast.LENGTH_LONG).show();
                 SharedPreferences SP=getSharedPreferences("USER", Context.MODE_PRIVATE);
                 SharedPreferences.Editor ED=SP.edit();
 
-                ED.putBoolean("SESSION_ACTIVE",true);
-                ED.putString("TOKEN","FROM SERVER");
-                ED.putString("USERNAME",mail);
-                ED.putString("PASSWORD",password);
+                try {
+
+                    ED.putBoolean("SESSION_ACTIVE",true);
+                    ED.putString("TOKEN",response.getString("access_token"));
+                    ED.putString("TOKEN_TYPE",response.getString("token_type"));
+                    ED.putString("USERID",response.getString("userid"));
+                    ED.putString("USERNAME",mail);
+                    ED.putString("PASSWORD",password);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
                 ED.commit();
-
-                finish();
+                Intent intent = new Intent(login_activity.this,RT_Survey_main.class);
                 startActivity(intent);
-
+                finish();
                 pDialog.hide();
+
             }
         }, new Response.ErrorListener() {
 
