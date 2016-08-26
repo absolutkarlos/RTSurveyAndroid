@@ -65,7 +65,7 @@ public class Item_Fragment extends Fragment{
 
         public MyFragmentAdapter(FragmentManager fm) {
             super(fm);
-            tabs=getResources().getStringArray(R.array.TAB_ITEM);
+            tabs=getResources().getStringArray(R.array.tab_item);
         }
 
         @Override

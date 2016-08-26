@@ -74,8 +74,8 @@ public class login_activity extends AppCompatActivity {
 
         try {
             LOGIN.put("grant_type","password");
-            LOGIN.put("UserName","faragon");
-            LOGIN.put("Password","123456");
+            LOGIN.put("UserName",mail);
+            LOGIN.put("Password",password);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -4,14 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -34,6 +37,8 @@ public class RT_Survey_main extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
+    private Boolean Aux=false;
+    private JSONObject responseAUX;
     private Boolean SESSION_ACTIVE;
     private String MAIL;
     private String PASSWORD;
@@ -46,6 +51,26 @@ public class RT_Survey_main extends AppCompatActivity {
 
     private ProgressDialog pDialog;
     private JOR mJOR;
+
+    JSONResponse mJsonResponse;
+
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+        try
+        {
+            mJsonResponse = (JSONResponse) getApplicationContext();
+        }
+        catch (ClassCastException e)
+        {
+            //throw new ClassCastException(getApplicationContext().toString()+" must implement ");
+        }
+
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +211,7 @@ public class RT_Survey_main extends AppCompatActivity {
                 }
 
                 //ADVERTENCIA
-                RetryPolicy policy = new DefaultRetryPolicy(60000,
+                RetryPolicy policy = new DefaultRetryPolicy(0,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
@@ -195,6 +220,7 @@ public class RT_Survey_main extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
+                        responseAUX=response;
                         pDialog.hide();
                         Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
 
@@ -217,10 +243,20 @@ public class RT_Survey_main extends AppCompatActivity {
                 break;
 
             case R.id.Search:
+
                 //LOGICA PARA ACTUALIZAR DATOS
+                /*
                 FragmentManager fm = getSupportFragmentManager();
                 Dialog_Fragment DF = new Dialog_Fragment();
                 DF.show(fm, "DF");
+                */
+
+                if(responseAUX!=null){
+                    mJsonResponse.JSONList(responseAUX);
+                }else{
+                    Toast.makeText(this,"nulo JSON", Toast.LENGTH_SHORT).show();
+                }
+
 
 
                 break;
@@ -230,6 +266,10 @@ public class RT_Survey_main extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    public interface JSONResponse{
+        void JSONList(JSONObject jsonObject);
     }
 
 }

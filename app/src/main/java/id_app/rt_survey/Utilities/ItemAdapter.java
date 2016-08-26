@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -51,8 +52,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
         holder.name.setText(item.name);
         holder.locate.setText(item.locate);
         holder.date.setText(item.date);
+        //holder.circle_status.setBackgroundColor(Integer.parseInt(item.color));
 
     }
+
+    public String toHex(String arg) {
+        return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
+    }
+
 
     @Override
     public int getItemCount() {

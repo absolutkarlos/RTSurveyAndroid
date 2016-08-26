@@ -77,7 +77,7 @@ public class Survey_two extends Fragment {
 
         public MyFragmentAdapter(FragmentManager fm) {
             super(fm);
-            tabs=getResources().getStringArray(R.array.TAB);
+            tabs=getResources().getStringArray(R.array.tab);
         }
 
         @Override

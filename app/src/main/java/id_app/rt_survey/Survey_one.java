@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,7 +42,7 @@ import id_app.rt_survey.Utilities.ItemAdapter;
 /**
  * Created by Carlos_Lopez on 2/7/16.
  */
-public class Survey_one extends Fragment{
+public class Survey_one extends Fragment implements RT_Survey_main.JSONResponse{
 
 
     private RecyclerView recycle_view;
@@ -121,4 +122,52 @@ public class Survey_one extends Fragment{
 
         return true;
     }
+
+    @Override
+    public void JSONList(JSONObject jsonObject) {
+
+        JSONArray array;
+
+        try {
+            array=jsonObject.getJSONArray("Ordenes");
+        } catch (JSONException e) {
+            array=null;
+            e.printStackTrace();
+        }
+
+        if(array!=null){
+            for(int n = 0; n < array.length(); n++)
+            {
+
+                List<Item> data= new ArrayList<>();
+                try {
+
+                    JSONObject[] object=new JSONObject[array.length()];
+                    object[n]= array.getJSONObject(n);
+
+                    String name=object[n].getJSONObject("site").getJSONObject("client").getString("legalName");
+                    String colar=object[n].getJSONObject("site").getJSONObject("orderStatus").getString("color");
+                    String locate=object[n].getJSONObject("site").getString("address");
+                    String date=object[n].getJSONObject("client").getString("createAt");
+
+                    Item item= new Item(colar,date,locate,name);
+                    data.add(item);
+
+                    itemAdapter=new ItemAdapter(data,(AppCompatActivity)getActivity());
+                    recycle_view.setAdapter(itemAdapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }else{
+
+            Toast.makeText(getActivity(),"Respuesta Nula de Servidor",Toast.LENGTH_SHORT).show();
+
+        }
+
+
+    }
+
 }
