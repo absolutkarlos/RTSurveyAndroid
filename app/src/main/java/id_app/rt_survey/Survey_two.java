@@ -61,9 +61,6 @@ public class Survey_two extends Fragment {
             material_tab.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
         }
 
-
-
-
     }
 
     private class CustomTabClickListener implements View.OnClickListener {
@@ -73,12 +70,6 @@ public class Survey_two extends Fragment {
 
         }
     }
-
-
-
-
-
-
 
     private class MyFragmentAdapter extends FragmentStatePagerAdapter {
 

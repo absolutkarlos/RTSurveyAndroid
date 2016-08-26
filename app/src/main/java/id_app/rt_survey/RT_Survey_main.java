@@ -1,5 +1,6 @@
 package id_app.rt_survey;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import id_app.rt_survey.Api.AppController;
+import id_app.rt_survey.Api.JOR;
+import id_app.rt_survey.Api.URL;
+
 public class RT_Survey_main extends AppCompatActivity {
 
     private Toolbar app_bar;
@@ -25,10 +38,14 @@ public class RT_Survey_main extends AppCompatActivity {
     private String MAIL;
     private String PASSWORD;
     private String TOKEN;
+    private String USERID;
     private static final String DEFAULT="N/A";
 
     private SharedPreferences SP;
     private SharedPreferences.Editor ED;
+
+    private ProgressDialog pDialog;
+    private JOR mJOR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +67,7 @@ public class RT_Survey_main extends AppCompatActivity {
             //LINEA DE TESTEO
             Toast.makeText(this,SP.getString("USERID",DEFAULT)+" "+SP.getString("TOKEN_TYPE",DEFAULT),Toast.LENGTH_SHORT).show();
 
+            USERID=SP.getString("USERID",null);
             MAIL=SP.getString("USERNAME",DEFAULT);
             PASSWORD=SP.getString("PASSWORD",DEFAULT);
             TOKEN=SP.getString("TOKEN",DEFAULT);;
@@ -139,6 +157,9 @@ public class RT_Survey_main extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.Go:
+
+                Toast.makeText(this,TOKEN,Toast.LENGTH_SHORT).show();
+                /*
                 //LOGICA PARA CAMBIAR A LA SEGUNDA VISTA...
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -146,10 +167,55 @@ public class RT_Survey_main extends AppCompatActivity {
                 transaction.replace(R.id.sub_frame,one,"F2");
                 transaction.addToBackStack(null);
                 transaction.commit();
+                */
+
                 break;
             case R.id.Update:
                 //LOGICA PARA ACTUALIZAR DATOS
+
+                JSONObject LIST = new JSONObject();
+
+                pDialog = new ProgressDialog(this);
+                pDialog.setMessage("Loading...");
+                pDialog.show();
+
+                try {
+                    LIST.put("TOKEN",SP.getString("TOKEN",null));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //ADVERTENCIA
+                RetryPolicy policy = new DefaultRetryPolicy(60000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+
+                mJOR=new JOR(URL.LIST.getRequestType(), URL.LIST.getURL()+USERID, LIST, new Response.Listener<JSONObject>()  {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        pDialog.hide();
+                        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        pDialog.hide();
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } );
+
+                mJOR.setRetryPolicy(policy);
+                AppController.getInstance().addToRequestQueue(mJOR,"LIST");
+
                 break;
+
             case R.id.Search:
                 //LOGICA PARA ACTUALIZAR DATOS
                 FragmentManager fm = getSupportFragmentManager();
