@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -14,22 +13,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import id_app.rt_survey.Api.AppController;
 import id_app.rt_survey.Api.JOR;
-import id_app.rt_survey.Api.URL;
 
 public class RT_Survey_main extends AppCompatActivity {
 
@@ -52,22 +42,9 @@ public class RT_Survey_main extends AppCompatActivity {
     private ProgressDialog pDialog;
     private JOR mJOR;
 
-    JSONResponse mJsonResponse;
-
-
     @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
-
-        try
-        {
-            mJsonResponse = (JSONResponse) getApplicationContext();
-        }
-        catch (ClassCastException e)
-        {
-            //throw new ClassCastException(getApplicationContext().toString()+" must implement ");
-        }
-
 
 
     }
@@ -198,47 +175,6 @@ public class RT_Survey_main extends AppCompatActivity {
             case R.id.Update:
                 //LOGICA PARA ACTUALIZAR DATOS
 
-                JSONObject LIST = new JSONObject();
-
-                pDialog = new ProgressDialog(this);
-                pDialog.setMessage("Loading...");
-                pDialog.show();
-
-                try {
-                    LIST.put("TOKEN",SP.getString("TOKEN",null));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                //ADVERTENCIA
-                RetryPolicy policy = new DefaultRetryPolicy(0,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-
-                mJOR=new JOR(URL.LIST.getRequestType(), URL.LIST.getURL()+USERID, LIST, new Response.Listener<JSONObject>()  {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        responseAUX=response;
-                        pDialog.hide();
-                        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        pDialog.hide();
-                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } );
-
-                mJOR.setRetryPolicy(policy);
-                AppController.getInstance().addToRequestQueue(mJOR,"LIST");
 
                 break;
 
@@ -251,12 +187,13 @@ public class RT_Survey_main extends AppCompatActivity {
                 DF.show(fm, "DF");
                 */
 
+                /*
                 if(responseAUX!=null){
                     mJsonResponse.JSONList(responseAUX);
                 }else{
                     Toast.makeText(this,"nulo JSON", Toast.LENGTH_SHORT).show();
                 }
-
+                */
 
 
                 break;
@@ -268,8 +205,6 @@ public class RT_Survey_main extends AppCompatActivity {
         return false;
     }
 
-    public interface JSONResponse{
-        void JSONList(JSONObject jsonObject);
-    }
+
 
 }

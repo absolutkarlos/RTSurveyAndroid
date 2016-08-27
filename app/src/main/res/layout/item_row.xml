@@ -9,7 +9,7 @@
             android:layout_height="match_parent"
             android:background="@color/Background">
 
-            <ImageView
+            <id_app.rt_survey.Utilities.RoundedImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:id="@+id/circle_status"
@@ -17,8 +17,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_circle" />
+                android:layout_marginStart="20dp" />
 
             <TextView
                 style="@style/textview_custom"

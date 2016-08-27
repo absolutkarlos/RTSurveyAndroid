@@ -1,6 +1,8 @@
 package id_app.rt_survey.Utilities;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +29,19 @@ import id_app.rt_survey.Survey_one;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
 
+
+
     private List<Item> data= Collections.emptyList();
     private LayoutInflater inflater;
     private Context context;
     private AppCompatActivity activity;
+
+
+    public void swapItems(List<Item> todolist){
+        this.data = todolist;
+        notifyDataSetChanged();
+    }
+
 
     public ItemAdapter(List<Item> data,AppCompatActivity activity) {
         this.inflater = LayoutInflater.from(activity.getApplicationContext());
@@ -52,7 +63,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
         holder.name.setText(item.name);
         holder.locate.setText(item.locate);
         holder.date.setText(item.date);
-        //holder.circle_status.setBackgroundColor(Integer.parseInt(item.color));
+        holder.circle_status.setBackgroundColor(Color.parseColor(item.color));
 
     }
 

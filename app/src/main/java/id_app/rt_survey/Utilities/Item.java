@@ -7,10 +7,10 @@ import java.util.Date;
  */
 public class Item {
 
-    public String name;
-    public String locate;
-    public String date;
-    public String color;
+    public String name="test";
+    public String locate="test";
+    public String date="test";
+    public String color="test";
 
     public Item(String color, String date, String locate, String name) {
         this.color = color;

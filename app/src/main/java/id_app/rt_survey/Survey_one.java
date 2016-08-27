@@ -2,18 +2,14 @@ package id_app.rt_survey;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,7 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
@@ -30,11 +29,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import id_app.rt_survey.Api.AppController;
-import id_app.rt_survey.Api.JOR;
+import id_app.rt_survey.Api.JAR;
 import id_app.rt_survey.Api.URL;
 import id_app.rt_survey.Utilities.Item;
 import id_app.rt_survey.Utilities.ItemAdapter;
@@ -42,11 +42,11 @@ import id_app.rt_survey.Utilities.ItemAdapter;
 /**
  * Created by Carlos_Lopez on 2/7/16.
  */
-public class Survey_one extends Fragment implements RT_Survey_main.JSONResponse{
+public class Survey_one extends Fragment{
 
 
     private RecyclerView recycle_view;
-    private JOR mJOR;
+    private JAR mJOR;
     private View view;
     private ItemAdapter itemAdapter;
     private ProgressDialog pDialog;
@@ -60,12 +60,14 @@ public class Survey_one extends Fragment implements RT_Survey_main.JSONResponse{
 
         view=inflater.inflate(R.layout.survey_one,container,false);
         recycle_view=(RecyclerView) view.findViewById(R.id.recycler_view);
+
         itemAdapter=new ItemAdapter(getData(),(AppCompatActivity)getActivity());
         recycle_view.setAdapter(itemAdapter);
         recycle_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         setHasOptionsMenu(true);
 
-        SharedPreferences SP = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
+        SP = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
         USERID=SP.getString("USERID",null);
         TOKEN=SP.getString("TOKEN",null);
 
@@ -77,12 +79,31 @@ public class Survey_one extends Fragment implements RT_Survey_main.JSONResponse{
     public static List<Item> getData(){
 
         List<Item> data= new ArrayList<>();
+
+        /*
+
         for (int i=0;i<=30;i++){
 
             Item item= new Item("color"+String.valueOf(i),"name"+String.valueOf(i),"locate"+String.valueOf(i),"date"+String.valueOf(i));
             data.add(item);
         }
+        */
+
         return data;
+
+    }
+
+
+    public static List<Item> getData2(){
+
+        List<Item> data= new ArrayList<>();
+        for (int i=0;i<=3;i++){
+
+            Item item= new Item("color"+String.valueOf(i),"name"+String.valueOf(i),"locate"+String.valueOf(i),"date"+String.valueOf(i));
+            data.add(item);
+        }
+        return data;
+
     }
 
 
@@ -113,6 +134,11 @@ public class Survey_one extends Fragment implements RT_Survey_main.JSONResponse{
 
             case R.id.Update:
 
+                listRequest();
+
+                break;
+
+            case R.id.Search:
 
 
                 break;
@@ -123,50 +149,97 @@ public class Survey_one extends Fragment implements RT_Survey_main.JSONResponse{
         return true;
     }
 
-    @Override
-    public void JSONList(JSONObject jsonObject) {
 
-        JSONArray array;
+    public void listRequest(){
+
+        //Toast.makeText(getActivity(),"Survey_ONE",Toast.LENGTH_SHORT).show();
+
+        JSONObject LIST = new JSONObject();
+
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading...");
+        pDialog.show();
 
         try {
-            array=jsonObject.getJSONArray("Ordenes");
+            LIST.put("TOKEN",SP.getString("TOKEN",null));
         } catch (JSONException e) {
-            array=null;
             e.printStackTrace();
         }
 
-        if(array!=null){
-            for(int n = 0; n < array.length(); n++)
-            {
+        //ADVERTENCIA
+        RetryPolicy policy = new DefaultRetryPolicy(0,
+                2,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
+
+
+        mJOR= new JAR(URL.LIST.getURL() + USERID, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                pDialog.hide();
                 List<Item> data= new ArrayList<>();
-                try {
 
-                    JSONObject[] object=new JSONObject[array.length()];
-                    object[n]= array.getJSONObject(n);
+                String name="wrong";
+                String colar="wrong";
+                String locate="wrong";
+                String date="wrong";
 
-                    String name=object[n].getJSONObject("site").getJSONObject("client").getString("legalName");
-                    String colar=object[n].getJSONObject("site").getJSONObject("orderStatus").getString("color");
-                    String locate=object[n].getJSONObject("site").getString("address");
-                    String date=object[n].getJSONObject("client").getString("createAt");
+                JSONObject object;
 
-                    Item item= new Item(colar,date,locate,name);
+                for(int i=0;i<=response.length(); i++){
+
+                    try {
+                        object= response.getJSONObject(i);
+                        name=object.getJSONObject("site").getJSONObject("client").getString("legalName");
+                        colar=object.getJSONObject("orderStatus").getString("color");
+                        locate=object.getString("address");
+                        date=object.getJSONObject("client").getString("createAt");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Item item= new Item(colar,"prueba","prueba",name);
                     data.add(item);
-
-                    itemAdapter=new ItemAdapter(data,(AppCompatActivity)getActivity());
-                    recycle_view.setAdapter(itemAdapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
+                itemAdapter.swapItems(data);
+
             }
-        }else{
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-            Toast.makeText(getActivity(),"Respuesta Nula de Servidor",Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
 
+                HashMap<String, String> headers = new HashMap<String, String>();
+
+                String token = null;
+                token = TOKEN;
+
+                if(token!=null){
+                    Log.e("epalex",token);
+                    headers.put("Authorization", "bearer"+" "+token);
+                    headers.put("Content-Type","application/json");
+                }
+
+                return headers;
+            }
+        };
+
+
+        try {
+            mJOR.getHeaders();
+        } catch (AuthFailureError authFailureError) {
+            authFailureError.printStackTrace();
         }
 
+        mJOR.setRetryPolicy(policy);
+        AppController.getInstance().addToRequestQueue(mJOR,"LIST");
 
     }
 
