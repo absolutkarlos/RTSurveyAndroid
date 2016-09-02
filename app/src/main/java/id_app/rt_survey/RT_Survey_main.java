@@ -15,11 +15,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import org.json.JSONObject;
-
-import java.io.File;
 
 import id_app.rt_survey.Api.JOR;
 
@@ -123,18 +120,6 @@ public class RT_Survey_main extends AppCompatActivity {
 
                 switch (item.getItemId()){
 
-                    case R.id.texto_1:
-                        Toast.makeText(RT_Survey_main.this,"UNO",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.texto_2:
-                        Toast.makeText(RT_Survey_main.this,"DOS",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.texto_3:
-                        Toast.makeText(RT_Survey_main.this,"TRES",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.texto_4:
-                        Toast.makeText(RT_Survey_main.this,"CUATRO",Toast.LENGTH_SHORT).show();
-                        break;
                     case R.id.close_user:
 
                         getBaseContext().deleteFile("SURVEY_CACHE");
@@ -153,54 +138,6 @@ public class RT_Survey_main extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.Go:
-
-                /*
-                //LOGICA PARA CAMBIAR A LA SEGUNDA VISTA...
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                Survey_two one = new Survey_two();
-                transaction.replace(R.id.sub_frame,one,"F2");
-                transaction.addToBackStack(null);
-                transaction.commit();
-                */
-
-                break;
-            case R.id.Update:
-
-                //LOGICA PARA ACTUALIZAR DATOS
-                break;
-
-            case R.id.Search:
-
-                //LOGICA PARA ACTUALIZAR DATOS
-                /*
-                FragmentManager fm = getSupportFragmentManager();
-                Dialog_Fragment DF = new Dialog_Fragment();
-                DF.show(fm, "DF");
-                */
-
-                /*
-                if(responseAUX!=null){
-                    mJsonResponse.JSONList(responseAUX);
-                }else{
-                    Toast.makeText(this,"nulo JSON", Toast.LENGTH_SHORT).show();
-                }
-                */
-
-                break;
-            default:
-                break;
-
-        }
-
-        return false;
     }
 
 

@@ -10,44 +10,80 @@
     android:paddingBottom="10dp"
     android:gravity="center">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/imageView"
+        android:layout_marginTop="10dp"
+        android:text="RT Survey"
+        android:textSize="40sp"
+        android:gravity="left"
+        android:textColor="#000000"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp" />
+        android:textStyle="bold"
+        android:layout_marginLeft="8dp" />
 
-    <EditText
-        style="@style/edittext_custom"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/reference1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/mail"
         android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:hint="@string/login_mail"/>
+        android:layout_marginTop="40dp">
 
-    <EditText
-        style="@style/edittext_custom"
+        <EditText
+            style="@style/edittext_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mail"
+            android:hint="@string/login_mail"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/reference2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password"
-        android:layout_below="@+id/mail"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/login_password"/>
+        android:layout_below="@+id/reference1"
+        android:layout_centerHorizontal="true">
+
+        <EditText
+            style="@style/edittext_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/password"
+            android:layout_below="@+id/mail"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/login_password"
+            android:inputType="textPassword" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:id="@+id/login"
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/reference2"
         android:layout_marginTop="20dp"
-        android:layout_alignLeft="@+id/password"
-        android:layout_alignStart="@+id/password"
-        android:layout_alignRight="@+id/password"
-        android:layout_alignEnd="@+id/password" />
+        android:layout_alignLeft="@+id/reference2"
+        android:layout_alignStart="@+id/reference2"
+        android:layout_alignRight="@+id/reference2"
+        android:layout_alignEnd="@+id/reference2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Powered by Gold Data"
+        android:id="@+id/textView"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#000000"
+        android:layout_marginLeft="8dp" />
 
 
 </RelativeLayout>

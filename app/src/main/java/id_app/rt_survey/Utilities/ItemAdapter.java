@@ -28,20 +28,15 @@ import id_app.rt_survey.Survey_one;
  */
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
-
-
-
     private List<Item> data= Collections.emptyList();
     private LayoutInflater inflater;
     private Context context;
     private AppCompatActivity activity;
 
-
     public void swapItems(List<Item> todolist){
         this.data = todolist;
         notifyDataSetChanged();
     }
-
 
     public ItemAdapter(List<Item> data,AppCompatActivity activity) {
         this.inflater = LayoutInflater.from(activity.getApplicationContext());
@@ -62,13 +57,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
         Item item=data.get(position);
         holder.name.setText(item.name);
         holder.locate.setText(item.locate);
-        holder.date.setText(item.date);
+        holder.date.setText("...");
+        holder.order_number.setText(item.order_name);
         holder.circle_status.setBackgroundColor(Color.parseColor(item.color));
 
-    }
-
-    public String toHex(String arg) {
-        return String.format("%040x", new BigInteger(1, arg.getBytes(/*YOUR_CHARSET?*/)));
     }
 
 
@@ -80,18 +72,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
     class Holder extends RecyclerView.ViewHolder{
 
-        ImageView circle_status;
+        RoundedImageView circle_status;
         TextView name;
         TextView locate;
         TextView date;
+        TextView order_number;
 
         public Holder(View itemView) {
             super(itemView);
 
-            circle_status=(ImageView)itemView.findViewById(R.id.circle_status);
+            circle_status= (RoundedImageView)itemView.findViewById(R.id.circle_status);
             name=(TextView)itemView.findViewById(R.id.name);
             locate=(TextView)itemView.findViewById(R.id.locate);
-            date=(TextView)itemView.findViewById(R.id.locate);
+            date=(TextView)itemView.findViewById(R.id.date);
+            order_number=(TextView) itemView.findViewById(R.id.order_number);
 
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override

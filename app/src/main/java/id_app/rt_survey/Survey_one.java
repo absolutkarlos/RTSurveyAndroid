@@ -128,29 +128,10 @@ public class Survey_one extends Fragment{
 
         switch (item.getItemId()) {
 
-            case R.id.Go:
-                Toast.makeText(getActivity(),TOKEN,Toast.LENGTH_SHORT).show();
-                /*
-                //LOGICA PARA CAMBIAR A LA SEGUNDA VISTA...
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                Survey_two one = new Survey_two();
-                transaction.replace(R.id.sub_frame,one,"F2");
-                transaction.addToBackStack(null);
-                transaction.commit();
-                */
-                break;
-
             case R.id.Update:
-
                 listRequest();
-
                 break;
 
-            case R.id.Search:
-
-
-                break;
             default:
                 break;
         }
@@ -158,13 +139,12 @@ public class Survey_one extends Fragment{
         return true;
     }
 
-
     public void listRequest(){
 
         JSONObject LIST = new JSONObject();
 
         pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("Cargando...");
         pDialog.show();
 
         try {
@@ -194,16 +174,28 @@ public class Survey_one extends Fragment{
                     try {
 
                         object= response.getJSONObject(i);
+
                         name=object.getJSONObject("site").getJSONObject("client").getString("legalName");
                         colar=object.getJSONObject("orderStatus").getString("color");
                         locate=object.getJSONObject("site").getString("address");
-                        date=object.getJSONObject("client").getString("createAt");
+
+                        date=object.getJSONObject("site").getJSONObject("client").getString("createAt");
+                        order_name=object.getString("orderNumber");
+
+                        Log.e("VER OBJETO",object.toString());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    item= new Item(colar,"prueba","prueba",name,"prueba");
+                    Log.e("VER",String.valueOf(i));
+                    Log.e("VER",name);
+                    Log.e("VER",colar);
+                    Log.e("VER",locate);
+                    Log.e("VER",date);
+                    Log.e("VER",order_name);
+
+                    item= new Item(colar,locate,date,name,order_name);
                     data_igni.add(item);
                 }
 
@@ -242,7 +234,6 @@ public class Survey_one extends Fragment{
             public Map<String, String> getHeaders() throws AuthFailureError {
 
                 HashMap<String, String> headers = new HashMap<String, String>();
-
                 String token = null;
                 token = TOKEN;
 
@@ -264,6 +255,9 @@ public class Survey_one extends Fragment{
         AppController.getInstance().addToRequestQueue(mJOR,"LIST");
 
     }
+
+
+
 
 
 }

@@ -69,7 +69,7 @@ public class login_activity extends AppCompatActivity {
         JSONObject LOGIN = new JSONObject();
 
         pDialog = new ProgressDialog(this);
-        pDialog.setMessage("Loading...");
+        pDialog.setMessage("Cargando...");
         pDialog.show();
 
         try {
@@ -120,29 +120,7 @@ public class login_activity extends AppCompatActivity {
 
         });
 
-
-
         AppController.getInstance().addToRequestQueue(mJOR,"LOGIN");
-
-
-        /*
-
-        Intent intent = new Intent(this,RT_Survey_main.class);
-
-        SharedPreferences SP=getSharedPreferences("USER", Context.MODE_PRIVATE);
-        SharedPreferences.Editor ED=SP.edit();
-
-        ED.putBoolean("SESSION_ACTIVE",true);
-        ED.putString("TOKEN","FROM SERVER");
-        ED.putString("MAIL",mail);
-        ED.putString("PASSWORD",password);
-        ED.commit();
-
-        finish();
-        startActivity(intent);
-
-        */
-
 
     }
 
