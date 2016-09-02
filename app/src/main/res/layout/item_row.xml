@@ -2,7 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="70dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -11,13 +11,14 @@
 
             <id_app.rt_survey.Utilities.RoundedImageView
                 android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_height="60dp"
                 android:id="@+id/circle_status"
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:background="#000000" />
 
             <TextView
                 style="@style/textview_custom"
@@ -26,7 +27,8 @@
                 android:text="New Text"
                 android:id="@+id/name"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:textSize="20sp" />
 
             <TextView
                 style="@style/textview_custom"
@@ -34,10 +36,9 @@
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/locate"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginRight="20dp" />
+                android:layout_below="@+id/name"
+                android:layout_alignLeft="@+id/name"
+                android:layout_alignStart="@+id/name" />
 
             <TextView
                 style="@style/textview_custom"
@@ -45,16 +46,27 @@
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/date"
-                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_alignBottom="@+id/circle_status"
                 android:layout_toRightOf="@+id/circle_status"
                 android:layout_toEndOf="@+id/circle_status"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginStart="20dp" />
 
             <View
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="#FFFFFF" />
+
+            <TextView
+                style="@style/textview_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/order_number"
+                android:layout_alignTop="@+id/circle_status"
+                android:layout_alignLeft="@+id/date"
+                android:layout_alignStart="@+id/date" />
 
 
         </RelativeLayout>

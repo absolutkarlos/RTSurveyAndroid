@@ -85,7 +85,6 @@ public class login_activity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
 
-                Toast.makeText(login_activity.this,response.toString(),Toast.LENGTH_LONG).show();
                 SharedPreferences SP=getSharedPreferences("USER", Context.MODE_PRIVATE);
                 SharedPreferences.Editor ED=SP.edit();
 
@@ -94,7 +93,7 @@ public class login_activity extends AppCompatActivity {
                     ED.putBoolean("SESSION_ACTIVE",true);
                     ED.putString("TOKEN",response.getString("access_token"));
                     ED.putString("TOKEN_TYPE",response.getString("token_type"));
-                    ED.putString("USERID",response.getString("userid"));
+                    ED.putString("USER_ID", String.valueOf(response.getInt("userid")));
                     ED.putString("USERNAME",mail);
                     ED.putString("PASSWORD",password);
 

@@ -28,6 +28,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OptionalDataException;
+import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,15 +53,16 @@ import id_app.rt_survey.Utilities.ItemAdapter;
  */
 public class Survey_one extends Fragment{
 
-
     private RecyclerView recycle_view;
     private JAR mJOR;
     private View view;
-    private ItemAdapter itemAdapter;
+    private ItemAdapter itemAdapter=null;
     private ProgressDialog pDialog;
     private String USERID;
     private String TOKEN;
     private SharedPreferences SP;
+    private List<Item> data_firts=null;
+
 
     @Nullable
     @Override
@@ -61,51 +71,50 @@ public class Survey_one extends Fragment{
         view=inflater.inflate(R.layout.survey_one,container,false);
         recycle_view=(RecyclerView) view.findViewById(R.id.recycler_view);
 
-        itemAdapter=new ItemAdapter(getData(),(AppCompatActivity)getActivity());
-        recycle_view.setAdapter(itemAdapter);
-        recycle_view.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         setHasOptionsMenu(true);
 
         SP = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-        USERID=SP.getString("USERID",null);
+        USERID=SP.getString("USER_ID",null);
         TOKEN=SP.getString("TOKEN",null);
 
+        Toast.makeText(getActivity(),USERID,Toast.LENGTH_SHORT).show();
+
+        FileInputStream fis = null;
+
+        try {
+            fis = getActivity().openFileInput("SURVEY_CACHE");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            data_firts = (List<Item>) is.readObject();
+            is.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (OptionalDataException e) {
+            e.printStackTrace();
+        } catch (StreamCorruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         return view;
     }
 
-    //CONSTRUCTOR DE VALORES DE PRUEBA ANDROID
-    public static List<Item> getData(){
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-        List<Item> data= new ArrayList<>();
-
-        /*
-
-        for (int i=0;i<=30;i++){
-
-            Item item= new Item("color"+String.valueOf(i),"name"+String.valueOf(i),"locate"+String.valueOf(i),"date"+String.valueOf(i));
-            data.add(item);
+        if(data_firts==null){
+            listRequest();
+        }else{
+            itemAdapter=new ItemAdapter(data_firts,(AppCompatActivity)getActivity());
+            recycle_view.setAdapter(itemAdapter);
+            recycle_view.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
-        */
-
-        return data;
 
     }
-
-
-    public static List<Item> getData2(){
-
-        List<Item> data= new ArrayList<>();
-        for (int i=0;i<=3;i++){
-
-            Item item= new Item("color"+String.valueOf(i),"name"+String.valueOf(i),"locate"+String.valueOf(i),"date"+String.valueOf(i));
-            data.add(item);
-        }
-        return data;
-
-    }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -152,8 +161,6 @@ public class Survey_one extends Fragment{
 
     public void listRequest(){
 
-        //Toast.makeText(getActivity(),"Survey_ONE",Toast.LENGTH_SHORT).show();
-
         JSONObject LIST = new JSONObject();
 
         pDialog = new ProgressDialog(getActivity());
@@ -166,48 +173,66 @@ public class Survey_one extends Fragment{
             e.printStackTrace();
         }
 
-        //ADVERTENCIA
-        RetryPolicy policy = new DefaultRetryPolicy(0,
-                2,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-
-
-
         mJOR= new JAR(URL.LIST.getURL() + USERID, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
                 pDialog.hide();
-                List<Item> data= new ArrayList<>();
 
                 String name="wrong";
                 String colar="wrong";
                 String locate="wrong";
                 String date="wrong";
+                String order_name="wrong";
 
                 JSONObject object;
+                Item item=null;
+                List<Item> data_igni= new ArrayList<>();
 
                 for(int i=0;i<=response.length(); i++){
 
                     try {
+
                         object= response.getJSONObject(i);
                         name=object.getJSONObject("site").getJSONObject("client").getString("legalName");
                         colar=object.getJSONObject("orderStatus").getString("color");
-                        locate=object.getString("address");
+                        locate=object.getJSONObject("site").getString("address");
                         date=object.getJSONObject("client").getString("createAt");
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    Item item= new Item(colar,"prueba","prueba",name);
-                    data.add(item);
+                    item= new Item(colar,"prueba","prueba",name,"prueba");
+                    data_igni.add(item);
                 }
 
-                itemAdapter.swapItems(data);
+                FileOutputStream fos = null;
+
+                try {
+
+                    fos = getActivity().openFileOutput("SURVEY_CACHE", Context.MODE_PRIVATE);
+                    ObjectOutputStream os = new ObjectOutputStream(fos);
+                    os.writeObject(data_igni);
+                    os.close();
+                    fos.close();
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if(data_firts==null){
+                    itemAdapter=new ItemAdapter(data_igni,(AppCompatActivity)getActivity());
+                    recycle_view.setAdapter(itemAdapter);
+                    recycle_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+                }else{
+                    itemAdapter.swapItems(data_igni);
+                }
 
             }
-        }, new Response.ErrorListener() {
+        },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -222,11 +247,9 @@ public class Survey_one extends Fragment{
                 token = TOKEN;
 
                 if(token!=null){
-                    Log.e("epalex",token);
                     headers.put("Authorization", "bearer"+" "+token);
                     headers.put("Content-Type","application/json");
                 }
-
                 return headers;
             }
         };
@@ -238,9 +261,9 @@ public class Survey_one extends Fragment{
             authFailureError.printStackTrace();
         }
 
-        mJOR.setRetryPolicy(policy);
         AppController.getInstance().addToRequestQueue(mJOR,"LIST");
 
     }
+
 
 }

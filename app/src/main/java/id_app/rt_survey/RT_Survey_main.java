@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import java.io.File;
+
 import id_app.rt_survey.Api.JOR;
 
 public class RT_Survey_main extends AppCompatActivity {
@@ -66,9 +68,6 @@ public class RT_Survey_main extends AppCompatActivity {
 
         }else{
 
-            //LINEA DE TESTEO
-            Toast.makeText(this,SP.getString("USERID",DEFAULT)+" "+SP.getString("TOKEN_TYPE",DEFAULT),Toast.LENGTH_SHORT).show();
-
             USERID=SP.getString("USERID",null);
             MAIL=SP.getString("USERNAME",DEFAULT);
             PASSWORD=SP.getString("PASSWORD",DEFAULT);
@@ -106,7 +105,6 @@ public class RT_Survey_main extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        //INICIALIZANDO EL PRIMER FRAGMENTO DE PRUEBA
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         Survey_one one = new Survey_one();
@@ -122,7 +120,9 @@ public class RT_Survey_main extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 item.setChecked(true);
                 drawerLayout.closeDrawers();
+
                 switch (item.getItemId()){
+
                     case R.id.texto_1:
                         Toast.makeText(RT_Survey_main.this,"UNO",Toast.LENGTH_SHORT).show();
                         break;
@@ -137,6 +137,7 @@ public class RT_Survey_main extends AppCompatActivity {
                         break;
                     case R.id.close_user:
 
+                        getBaseContext().deleteFile("SURVEY_CACHE");
                         ED=SP.edit();
                         ED.clear();
                         ED.commit();
@@ -160,7 +161,6 @@ public class RT_Survey_main extends AppCompatActivity {
 
             case R.id.Go:
 
-                Toast.makeText(this,TOKEN,Toast.LENGTH_SHORT).show();
                 /*
                 //LOGICA PARA CAMBIAR A LA SEGUNDA VISTA...
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -173,9 +173,8 @@ public class RT_Survey_main extends AppCompatActivity {
 
                 break;
             case R.id.Update:
+
                 //LOGICA PARA ACTUALIZAR DATOS
-
-
                 break;
 
             case R.id.Search:
@@ -194,7 +193,6 @@ public class RT_Survey_main extends AppCompatActivity {
                     Toast.makeText(this,"nulo JSON", Toast.LENGTH_SHORT).show();
                 }
                 */
-
 
                 break;
             default:

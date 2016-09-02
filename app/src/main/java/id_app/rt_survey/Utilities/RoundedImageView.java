@@ -34,6 +34,11 @@ public class RoundedImageView extends ImageView {
     }
 
     @Override
+    public void setBackground(Drawable background) {
+        super.setBackground(background);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
 
         Drawable drawable = getDrawable();
@@ -68,6 +73,7 @@ public class RoundedImageView extends ImageView {
     }
 
     public static Bitmap getCroppedBitmap(Bitmap bmp, int radius) {
+
         Bitmap sbmp;
         if(bmp.getWidth() != radius || bmp.getHeight() != radius)
             sbmp = Bitmap.createScaledBitmap(bmp, radius, radius, false);
