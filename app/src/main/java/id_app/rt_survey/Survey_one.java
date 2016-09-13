@@ -166,6 +166,7 @@ public class Survey_one extends Fragment{
 
         //Text Color Custom AutoCompleteEditText
         SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setHint("Ingrese numero de orden");
         searchAutoComplete.setHintTextColor(Color.WHITE);
         searchAutoComplete.setTextColor(Color.WHITE);
 

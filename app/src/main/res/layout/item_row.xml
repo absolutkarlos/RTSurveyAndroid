@@ -77,7 +77,7 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="4dp"
+                android:layout_height="1.5dp"
                 android:id="@+id/idOrderStatus"
                 android:layout_below="@+id/orderNumber"
                 android:layout_alignLeft="@+id/orderNumber"

@@ -53,11 +53,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
         Item item=data.get(position);
 
-        holder.clientName.setText(item.clientName);
+        holder.clientName.setText(item.clientName.toUpperCase());
         holder.siteName.setText(item.siteName);
         holder.orderNumber.setText(item.orderNumber);
-
-
 
 
         try {
