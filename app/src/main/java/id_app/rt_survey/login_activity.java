@@ -4,28 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.SharedPreferencesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.nio.charset.StandardCharsets;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import id_app.rt_survey.Api.AppController;
 import id_app.rt_survey.Api.JOR;
@@ -93,7 +83,7 @@ public class login_activity extends AppCompatActivity {
                     ED.putBoolean("SESSION_ACTIVE",true);
                     ED.putString("TOKEN",response.getString("access_token"));
                     ED.putString("TOKEN_TYPE",response.getString("token_type"));
-                    ED.putString("USER_ID", String.valueOf(response.getInt("userid")));
+                    ED.putString("USERID", String.valueOf(response.getInt("userid")));
                     ED.putString("USERNAME",mail);
                     ED.putString("PASSWORD",password);
 

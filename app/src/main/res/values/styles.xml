@@ -12,7 +12,6 @@
 
     </style>
 
-
     <style name="textview_custom" parent="android:Widget.TextView">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
@@ -20,7 +19,6 @@
     <style name="edittext_custom" parent="android:Widget.EditText">
         <item name="android:backgroundTint"
             tools:targetApi="lollipop">@color/colorPrimary</item>
-
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textColorHint">@color/WhiteHint</item>
     </style>

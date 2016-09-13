@@ -15,8 +15,6 @@ import android.widget.EditText;
 public class Dialog_Fragment extends DialogFragment {
 
     private View view;
-    private EditText mSearch;
-    private Button mSearchButton;
 
     public Dialog_Fragment() {
 

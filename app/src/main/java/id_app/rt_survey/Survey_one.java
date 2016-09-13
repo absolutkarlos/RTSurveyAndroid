@@ -1,14 +1,19 @@
 package id_app.rt_survey;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,9 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 
 import org.json.JSONArray;
@@ -29,14 +32,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +53,7 @@ import id_app.rt_survey.Utilities.ItemAdapter;
 public class Survey_one extends Fragment{
 
     private RecyclerView recycle_view;
-    private JAR mJOR;
+    private JAR mJAR;
     private View view;
     private ItemAdapter itemAdapter=null;
     private ProgressDialog pDialog;
@@ -63,6 +62,16 @@ public class Survey_one extends Fragment{
     private SharedPreferences SP;
     private List<Item> data_firts=null;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle extras = getArguments();
+        //Bundle extras = getActivity().getIntent().getExtras();
+        data_firts = extras.getParcelableArrayList("list");
+
+    }
 
     @Nullable
     @Override
@@ -74,30 +83,11 @@ public class Survey_one extends Fragment{
         setHasOptionsMenu(true);
 
         SP = getActivity().getSharedPreferences("USER", Context.MODE_PRIVATE);
-        USERID=SP.getString("USER_ID",null);
+        USERID=SP.getString("USERID",null);
         TOKEN=SP.getString("TOKEN",null);
 
+        //TOAST MALDITO
         Toast.makeText(getActivity(),USERID,Toast.LENGTH_SHORT).show();
-
-        FileInputStream fis = null;
-
-        try {
-            fis = getActivity().openFileInput("SURVEY_CACHE");
-            ObjectInputStream is = new ObjectInputStream(fis);
-            data_firts = (List<Item>) is.readObject();
-            is.close();
-            fis.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (OptionalDataException e) {
-            e.printStackTrace();
-        } catch (StreamCorruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         return view;
     }
@@ -105,6 +95,8 @@ public class Survey_one extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //Toast.makeText(getActivity(),data_firts.get(1).siteName,Toast.LENGTH_SHORT).show();
 
         if(data_firts==null){
             listRequest();
@@ -116,11 +108,75 @@ public class Survey_one extends Fragment{
 
     }
 
+
+    public void searchIdNumbre(String query_text){
+
+        List<Item> data_second=new ArrayList<>();
+        String search_uppercarse=query_text.toUpperCase();
+
+        if(query_text.length()==0){
+
+            itemAdapter.swapItems(data_firts);
+
+        }else{
+
+            for(int i=0;i<=data_firts.size()-1; i++){
+
+                if(data_firts.get(i).orderNumber.contains(search_uppercarse)){
+                    Item mItem=data_firts.get(i);
+                    data_second.add(mItem);
+                }
+
+            }
+            itemAdapter.swapItems(data_second);
+        }
+
+    }
+
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
+
+        // Inflate the options menu from XML
+        //MenuInflater inflater = getMenuInflater();
         menu.clear();
         inflater.inflate(R.menu.toolbar_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.Search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                itemAdapter.swapItems(data_firts);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchIdNumbre(newText);
+                return false;
+            }
+        });
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        ComponentName componentName = new ComponentName(getActivity().getApplicationContext(),RT_Survey_main.class);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+
+        //Text Color Custom AutoCompleteEditText
+        SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        searchAutoComplete.setHintTextColor(Color.WHITE);
+        searchAutoComplete.setTextColor(Color.WHITE);
+
+        /*
+        SearchView searchView = (SearchView) menu.findItem(R.id.Search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        */
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -129,41 +185,49 @@ public class Survey_one extends Fragment{
         switch (item.getItemId()) {
 
             case R.id.Update:
+
                 listRequest();
+
+                break;
+
+            case R.id.Search:
+
+
                 break;
 
             default:
+
                 break;
         }
 
         return true;
     }
 
+
+
     public void listRequest(){
 
-        JSONObject LIST = new JSONObject();
+        File file= new File(getActivity().getCacheDir(),"SURVEY_CACHE");
+        file.delete();
 
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Cargando...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
-        try {
-            LIST.put("TOKEN",SP.getString("TOKEN",null));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mJOR= new JAR(URL.LIST.getURL() + USERID, new Response.Listener<JSONArray>() {
+        mJAR= new JAR(URL.LIST.getURL() + USERID, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
 
                 pDialog.hide();
 
-                String name="wrong";
-                String colar="wrong";
-                String locate="wrong";
-                String date="wrong";
-                String order_name="wrong";
+                String id="wrong";
+                String orderNumber="wrong";
+                String createAt="wrong";
+                String idOrderStatus="wrong";
+                String nameOrderStatus="wrong";
+                String siteName="wrong";
+                String clientName="wrong";
 
                 JSONObject object;
                 Item item=null;
@@ -175,12 +239,13 @@ public class Survey_one extends Fragment{
 
                         object= response.getJSONObject(i);
 
-                        name=object.getJSONObject("site").getJSONObject("client").getString("legalName");
-                        colar=object.getJSONObject("orderStatus").getString("color");
-                        locate=object.getJSONObject("site").getString("address");
-
-                        date=object.getJSONObject("site").getJSONObject("client").getString("createAt");
-                        order_name=object.getString("orderNumber");
+                        id=object.getString("id");
+                        orderNumber=object.getString("orderNumber");
+                        createAt=object.getString("createAt");
+                        idOrderStatus=object.getString("idOrderStatus");
+                        nameOrderStatus=object.getString("nameOrderStatus");
+                        siteName=object.getString("siteName");
+                        clientName=object.getString("clientName");
 
                         Log.e("VER OBJETO",object.toString());
 
@@ -188,22 +253,16 @@ public class Survey_one extends Fragment{
                         e.printStackTrace();
                     }
 
-                    Log.e("VER",String.valueOf(i));
-                    Log.e("VER",name);
-                    Log.e("VER",colar);
-                    Log.e("VER",locate);
-                    Log.e("VER",date);
-                    Log.e("VER",order_name);
-
-                    item= new Item(colar,locate,date,name,order_name);
+                    item= new Item(id,orderNumber,createAt,idOrderStatus,nameOrderStatus,siteName,clientName);
                     data_igni.add(item);
                 }
 
-                FileOutputStream fos = null;
+
 
                 try {
 
-                    fos = getActivity().openFileOutput("SURVEY_CACHE", Context.MODE_PRIVATE);
+                    File file= new File(getActivity().getCacheDir(),"SURVEY_CACHE");
+                    FileOutputStream fos = new FileOutputStream(file);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(data_igni);
                     os.close();
@@ -245,19 +304,8 @@ public class Survey_one extends Fragment{
             }
         };
 
-
-        try {
-            mJOR.getHeaders();
-        } catch (AuthFailureError authFailureError) {
-            authFailureError.printStackTrace();
-        }
-
-        AppController.getInstance().addToRequestQueue(mJOR,"LIST");
+        AppController.getInstance().addToRequestQueue(mJAR,"LIST");
 
     }
-
-
-
-
 
 }

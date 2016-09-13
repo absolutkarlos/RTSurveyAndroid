@@ -1,7 +1,7 @@
 <resources>
 
     <string name="google_app_id">992401608701</string>
-    <string name="app_name">RT_Survey</string>
+    <string name="app_name">RT Survey</string>
     <string name="open">Abrir</string>
     <string name="close">Cerrar</string>
 

@@ -10,11 +10,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Created by Carlos_Lopez on 3/12/16.
  */
 public class AppController extends Application {
 
+    //CREATE CACHE LOGIC DUMP
     public static final String TAG = AppController.class.getSimpleName();
 
     private RequestQueue mRequestQueue;
@@ -47,15 +53,6 @@ public class AppController extends Application {
         return mRequestQueue;
     }
 
-    public ImageLoader getImageLoader() {
-        getRequestQueue();
-        if (mImageLoader == null) {
-            mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
-        }
-        return this.mImageLoader;
-    }
-
     public <T> void addToRequestQueue(Request<T> req, String tag) {
         // set the default tag if tag is empty
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
@@ -72,7 +69,5 @@ public class AppController extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
-
-
 
 }

@@ -9,40 +9,31 @@
             android:layout_height="match_parent"
             android:background="@color/Background">
 
-            <id_app.rt_survey.Utilities.RoundedImageView
-                android:layout_width="10dp"
-                android:layout_height="60dp"
-                android:id="@+id/circle_status"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp" />
-
             <TextView
                 style="@style/textview_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/name"
+                android:id="@+id/clientName"
                 android:layout_centerVertical="true"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:gravity="left"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/date"
-                android:layout_toEndOf="@+id/date"
-                android:layout_marginLeft="12dp" />
+                android:layout_toRightOf="@+id/createAt"
+                android:layout_toEndOf="@+id/createAt"
+                android:layout_marginLeft="12dp"
+                android:singleLine="true" />
 
             <TextView
                 style="@style/textview_custom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/locate"
-                android:layout_below="@+id/name"
-                android:layout_alignLeft="@+id/name"
-                android:layout_alignStart="@+id/name"
+                android:id="@+id/siteName"
+                android:layout_below="@+id/clientName"
+                android:layout_alignLeft="@+id/clientName"
+                android:layout_alignStart="@+id/clientName"
                 android:gravity="left"
                 android:singleLine="true"
                 android:ellipsize="marquee"
@@ -59,13 +50,12 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/date"
+                android:id="@+id/createAt"
                 android:layout_marginLeft="10dp"
-                android:layout_alignBottom="@+id/circle_status"
-                android:layout_toRightOf="@+id/circle_status"
                 android:layout_marginStart="10dp"
-                android:gravity="left"
-                android:layout_below="@+id/name" />
+                android:layout_below="@+id/clientName"
+                android:layout_centerVertical="true"
+                android:gravity="center" />
 
             <View
                 android:layout_alignParentBottom="true"
@@ -78,11 +68,23 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:text="New Text"
-                android:id="@+id/order_number"
-                android:layout_alignTop="@+id/circle_status"
-                android:layout_alignLeft="@+id/date"
-                android:layout_alignStart="@+id/date"
-                android:gravity="left" />
+                android:id="@+id/orderNumber"
+                android:gravity="left"
+                android:layout_above="@+id/clientName"
+                android:layout_alignLeft="@+id/createAt"
+                android:layout_alignStart="@+id/createAt"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="4dp"
+                android:id="@+id/idOrderStatus"
+                android:layout_below="@+id/orderNumber"
+                android:layout_alignLeft="@+id/orderNumber"
+                android:layout_alignStart="@+id/orderNumber"
+                android:layout_alignRight="@+id/orderNumber"
+                android:layout_alignEnd="@+id/orderNumber"
+                android:layout_marginTop="1dp" />
 
 
         </RelativeLayout>

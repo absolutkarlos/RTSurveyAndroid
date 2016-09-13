@@ -3,15 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--
-    <item
-        android:id="@+id/Go"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_tab_white_24px"
-        app:showAsAction="always"
-        android:title="Go"/>
-    -->
-
     <item
         android:id="@+id/Update"
         android:orderInCategory="100"
@@ -19,13 +10,14 @@
         app:showAsAction="always"
         android:title="Update"/>
 
-    <!--
+
     <item
         android:id="@+id/Search"
+        android:title="Buscar"
         android:orderInCategory="100"
         android:icon="@drawable/ic_search_black_24dp"
-        app:showAsAction="always"
-        android:title="Search"/>
-    -->
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView"/>
+
 
 </menu>
